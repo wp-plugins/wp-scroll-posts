@@ -26,7 +26,7 @@ The plugin can be use just by installing it by wordpress admin or upload manuall
 
 == Frequently Asked Questions ==
 
-= How to set custom validation messages ? =
+= How to set number of posts ? =
 
  Go to "wp scroll posts" in left panel of wordpress. enable or disable title, thumbnial, or date as you need or other setting.
  and press "Save Changes" button
