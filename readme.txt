@@ -1,7 +1,7 @@
 === wp-scroll-posts ===
 Contributors: ajay3085006
 Donate link: https://ajaysharma3085006.wordpress.com/
-Tags: comments validation, wordpress comment validation plugin
+Tags: scroll posts, vertical scroller,scroller widget
 Requires at least: 3.5
 Tested up to: 3.6.1
 Stable tag: trunk
