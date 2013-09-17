@@ -20,7 +20,7 @@ wp-scroll-posts  create widget of scroll posts up/down with setting page , give 
 
 The plugin can be use just by installing it by wordpress admin or upload manually. 
 
-1. Upload `wp-comment-validation` to the `/wp-content/plugins/` directory
+1. Upload `wp-scroll-posts` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Now go to wp-scroll-posts tab at wp-admin
 
@@ -31,7 +31,7 @@ The plugin can be use just by installing it by wordpress admin or upload manuall
  Go to "wp scroll posts" in left panel of wordpress. enable or disable title, thumbnial, or date as you need or other setting.
  and press "Save Changes" button
 
-For more visit blog [wp-comment-validation](https://ajaysharma3085006.wordpress.com/ "wp-comment-validation")
+For more visit blog [wp-scroll-posts](https://ajaysharma3085006.wordpress.com/ "wp-scroll-posts")
 
 == Screenshots ==
 
