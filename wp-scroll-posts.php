@@ -56,8 +56,8 @@ function wp_scroll_posts_scripts() {
     wp_register_script('vticker', plugins_url('js/jquery.vticker.js', __FILE__), array("jquery"));
     wp_enqueue_script('vticker');
 }
-add_action('wp_enqueue_scripts', 'wp_comments_styles');
-function wp_comments_styles() {
+add_action('wp_enqueue_scripts', 'wp_sp_styles');
+function wp_sp_styles() {
     wp_register_style('wpsp_css', plugins_url('css/styles.css', __FILE__));
     wp_enqueue_style('wpsp_css');
   }
