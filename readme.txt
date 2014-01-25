@@ -1,9 +1,9 @@
 === wp scroll posts ===
 Contributors: ajay3085006
 Donate link: https://ajaysharma3085006.wordpress.com/
-Tags: scroll posts, vertical scroller,scroller widget
+Tags: scroll posts, vertical scroller,scroller widget,scroller, wordpress post scroller ,scroll up/down
 Requires at least: 3.5
-Tested up to: 3.7.1
+Tested up to: 3.8
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -39,6 +39,8 @@ For more visit blog [wp-scroll-posts](https://ajaysharma3085006.wordpress.com/ "
 2. Admin setting page
 
 == Changelog ==
+= 0.3=
+* added length for excerpt 
 
 = 0.2 =
 * Initial release
@@ -48,5 +50,5 @@ For more visit blog [wp-scroll-posts](https://ajaysharma3085006.wordpress.com/ "
 
 == Upgrade Notice ==
 
-= 0.3 =
+= 0.4 =
 for thumbnail controls.
