@@ -3,30 +3,31 @@
   Plugin Name: wp-scroll-posts
   Plugin URI: http://ajaysharma3085006.wordpress.com/
   Description: scroll any category post up/down in widget 
-  Version: 0.2
+  Version: 0.3
   Author: Ajay Sharma
   Author URI: http://ajaysharma3085006.wordpress.com/
   License: GPLv2 or later
  */
   function wp_scroll_post_activation() {
-	  
-	   add_option( wpsp_nop, '3', '', yes ); 
-	   add_option( wpsp_mnop, '10', '', yes );
-	   add_option( wpsp_cat, 'uncategorized', '', yes ); 
-	   add_option( wpsp_direction,'up', '', yes ); 
-	   add_option( wpsp_readmore,'Read More', '', yes ); 
-	   add_option( wpsp_enable,'1', '', yes ); 
-	   add_option( wpsp_mousepause,'true', '', yes );
-	   add_option( wpsp_speed,'500', '', yes );
-	   add_option( wpsp_ptime,'3000', '', yes );
+    
+     add_option( wpsp_nop, '3', '', yes ); 
+     add_option( wpsp_mnop, '10', '', yes );
+     add_option( wpsp_cat, 'uncategorized', '', yes ); 
+     add_option( wpsp_direction,'up', '', yes ); 
+     add_option( wpsp_readmore,'Read More', '', yes ); 
+     add_option( wpsp_enable,'1', '', yes ); 
+     add_option( wpsp_mousepause,'true', '', yes );
+     add_option( wpsp_speed,'500', '', yes );
+     add_option( wpsp_ptime,'3000', '', yes );
      add_option( wpsp_thumbnail_enable,'1','', yes );
      add_option( wpsp_title_enable,'1', '', yes );
      add_option( wpsp_date_enable,'1', '', yes );
      add_option( wpsp_excerpt_enable,'1', '', yes );
      add_option( wpsp_readmore_enable,'1', '', yes );
-	  
-	  
-	  }
+     add_option( wpsp_c_len,'10', '', yes );
+    
+    
+    }
 register_activation_hook(__FILE__, 'wp_scroll_post_activation');
 //deactivation
 function wp_scroll_post_deactivation() {
@@ -45,6 +46,7 @@ delete_option( 'wpsp_title_enable' );
 delete_option( 'wpsp_date_enable' );
 delete_option( 'wpsp_excerpt_enable' );
 delete_option( 'wpsp_readmore_enable' );
+delete_option( 'wpsp_c_len' );
 
 
 }
@@ -64,34 +66,35 @@ function wp_sp_styles() {
     // create custom plugin settings menu
 add_action('admin_menu', 'scroll_posts_create_menu');
 function scroll_posts_create_menu() {
-	//create new top-level menu
-	//add_menu_page('scroll posts  Plugin Settings', 'wp scroll posts', 'administrator', __FILE__, 'scroll_posts_settings_page',plugins_url('/images/icon.png', __FILE__));
-	add_menu_page('scroll posts  Plugin Settings', 'wp scroll posts', 'administrator', 'wp_scroll_posts_setting', 'scroll_posts_settings_page',plugins_url('/images/icon.png', __FILE__));
-	
-	//call register settings function
-	add_action( 'admin_init', 'register_scroll_post_settings' );
+  //create new top-level menu
+  //add_menu_page('scroll posts  Plugin Settings', 'wp scroll posts', 'administrator', __FILE__, 'scroll_posts_settings_page',plugins_url('/images/icon.png', __FILE__));
+  add_menu_page('scroll posts  Plugin Settings', 'wp scroll posts', 'administrator', 'wp_scroll_posts_setting', 'scroll_posts_settings_page',plugins_url('/images/icon.png', __FILE__));
+  
+  //call register settings function
+  add_action( 'admin_init', 'register_scroll_post_settings' );
     
 }
   
 
 function register_scroll_post_settings() { 
 
-	//register our settings
-	register_setting( 'wpsp-settings-group', 'wpsp_nop' );
-	register_setting( 'wpsp-settings-group', 'wpsp_mnop' );
-	register_setting( 'wpsp-settings-group', 'wpsp_mnop' );
-	register_setting( 'wpsp-settings-group', 'wpsp_cat' );
-	register_setting( 'wpsp-settings-group', 'wpsp_direction' );
-	register_setting( 'wpsp-settings-group', 'wpsp_readmore' );
-	register_setting( 'wpsp-settings-group', 'wpsp_enable' );
-	register_setting( 'wpsp-settings-group', 'wpsp_mousepause' );
-	register_setting( 'wpsp-settings-group', 'wpsp_speed' );
-	register_setting( 'wpsp-settings-group', 'wpsp_ptime' );
+  //register our settings
+  register_setting( 'wpsp-settings-group', 'wpsp_nop' );
+  register_setting( 'wpsp-settings-group', 'wpsp_mnop' );
+  register_setting( 'wpsp-settings-group', 'wpsp_mnop' );
+  register_setting( 'wpsp-settings-group', 'wpsp_cat' );
+  register_setting( 'wpsp-settings-group', 'wpsp_direction' );
+  register_setting( 'wpsp-settings-group', 'wpsp_readmore' );
+  register_setting( 'wpsp-settings-group', 'wpsp_enable' );
+  register_setting( 'wpsp-settings-group', 'wpsp_mousepause' );
+  register_setting( 'wpsp-settings-group', 'wpsp_speed' );
+  register_setting( 'wpsp-settings-group', 'wpsp_ptime' );
   register_setting( 'wpsp-settings-group', 'wpsp_thumbnail_enable' );
   register_setting( 'wpsp-settings-group', 'wpsp_title_enable' );
   register_setting( 'wpsp-settings-group', 'wpsp_date_enable' );
   register_setting( 'wpsp-settings-group', 'wpsp_excerpt_enable' );
   register_setting( 'wpsp-settings-group', 'wpsp_readmore_enable' );
+  register_setting( 'wpsp-settings-group', 'wpsp_c_len' );
   //wpsp_thumbnail_enable
 
 }
@@ -188,6 +191,14 @@ function scroll_posts_settings_page() {?><div class="wrap">
          </td>
         </tr>
         <tr valign="top">
+        <th scope="row">Excerpt length (in words)(please only numeric) </th>
+        <td><input type="text" name="wpsp_c_len" value="<?php echo get_option('wpsp_c_len'); ?>" />
+                
+         Default: 10 <br />
+        
+         </td>
+        </tr>
+        <tr valign="top">
         <th scope="row">speed </th>
         <td><input type="text" name="wpsp_speed" value="<?php echo get_option('wpsp_speed'); ?>" />
                 
@@ -242,7 +253,7 @@ function scroll_posts_settings_page() {?><div class="wrap">
 // js multiple instance and v ticker setting here
 
 function js_id_scrool($id_post){
-	$js_fun_eve="
+  $js_fun_eve="
 
 
 <script type='text/javascript'>
@@ -263,7 +274,7 @@ direction:'".get_option('wpsp_direction')."'
           
         </script>
        ";
-	    echo $js_fun_eve;}
+      echo $js_fun_eve;}
  class wp_scroll_post extends WP_Widget {
 
     function __construct() {
@@ -310,7 +321,18 @@ query_posts( $args); if ( have_posts() ) : while ( have_posts() ) : the_post(); 
                     <?php if(get_option('wpsp_date_enable')==1){?> <span><?php echo get_the_date();?></span><?php }?>
                    
 
-                   <?php if(get_option('wpsp_excerpt_enable')==1){?> <p><?php the_excerpt()?></p><?php }?>
+                   <?php if(get_option('wpsp_excerpt_enable')==1){?> <p><?php //the_content();
+                   
+                   $wpsp_ex_len=get_option('wpsp_c_len');
+                   
+                     if (!is_numeric($wpsp_ex_len)) {
+             $wpsp_ex_len=10;
+             }
+                   $wpsp_content = get_the_content();                   
+$wpsp_trimmed = wp_trim_words( $wpsp_content, $wpsp_ex_len ,$more=null);
+$wpsp_rest = substr($wpsp_trimmed, 0, -8); 
+echo $wpsp_rest;
+                   ?></p><?php }?>
 
                     
                      <?php if(get_option('wpsp_readmore_enable')==1){?> 
