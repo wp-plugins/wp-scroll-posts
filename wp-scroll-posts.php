@@ -1,9 +1,9 @@
 <?php
     /*
-  Plugin Name: wp-scroll-posts
+  Plugin Name: wp scroll posts
   Plugin URI: http://ajaysharma3085006.wordpress.com/
-  Description: scroll any category post up/down in widget 
-  Version: 0.3
+  Description: scroll any category posts up/down in widget , page  or post, have shortcode [wpsp]
+  Version: 0.4
   Author: Ajay Sharma
   Author URI: http://ajaysharma3085006.wordpress.com/
   License: GPLv2 or later
@@ -245,6 +245,15 @@ function scroll_posts_settings_page() {?><div class="wrap">
     </table>
    
     <?php submit_button(); ?></form>
+	
+	<div > 
+	<h3>To add scroller to your website </h3>
+	<ul>
+	<li> <h4> Method 1</h4> Go to Appreance->widget  there you will find <code>wp scroll posts</code> widget</li>
+	<li> <h4> Method 2</h4>or use short code <code>[wpsp]</code> to your page or post or text widget</li>
+	<li> <h4> Method 3</h4>to use in theme use <code>&lt;?php echo do_shortcode('[wpsp]'); ?&gt;</code> to your template</li>
+	</div>
+	
 </div>
 <?php
 
@@ -300,6 +309,8 @@ direction:'".get_option('wpsp_direction')."'
 $id_post= rand();
 echo js_id_scrool($id_post);
         ?>
+		<!-- div id will be changed every time so please don't give css to id-->
+
         <div id="scrroll-<?php echo $id_post;?>" class="wpsp_container">
           <ul>
         <?php
@@ -376,3 +387,85 @@ function register_foo_widget() {
     register_widget( 'wp_scroll_post' );
 }
 add_action( 'widgets_init', 'register_foo_widget' );}
+
+
+
+
+/*****short code catcher starts here**/
+function wpsp_shortcode_catcher( $atts ) {
+ extract( shortcode_atts( array(
+    'src' => 'default value',
+    'flashvars' => 'http://www.qwanz.com/wigets/newwidget/31190/qbcolor1/3a4235/qbcolor2/111111/bcolor/bbbbbb/acolor/000000/lbcolor1/ff0000/lbcolor2/ffffff/pbcolor1/ffcc00/pbcolor2/ff6600/hide/1/result/0/font/1/border/straight/abcolor1/ffffff/abcolor2/d2cecf/registration/simple/qtcolor/ffffff/preview/0/widgetid/585/?lang=en',
+    'width' => '350px',
+    'height' => '400px',
+    ), $atts ) );
+    ob_start();
+    
+    add_filter('widget_text', 'do_shortcode'); //to enable shortcode in  text widget
+        
+       ?>
+<!--wp scrollpost  out put starts here by ajay sharma-->
+<?php 
+
+// output
+$id_post= rand();
+echo js_id_scrool($id_post);
+?>
+<!-- div id will be changed every time so please don't give css to id-->
+<div id="scrroll-<?php echo $id_post;?>" class="wpsp_container">
+          <ul>
+        <?php
+
+        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+$args = array('posts_per_page' => get_option('wpsp_mnop'),'category_name'=>get_option("wpsp_cat"), 'paged' => $paged );
+query_posts( $args); if ( have_posts($args) ) : while ( have_posts($args) ) : the_post($args); ?>
+                <li >                
+                  <?php if(get_option('wpsp_thumbnail_enable')==1){?> 
+                  <p class="wpsp_img_box"><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+                  <?php the_post_thumbnail('small'); ?>
+                  </a></p>
+                  <?php } ?>                  
+                  <div class="wpsp_detail">
+                    
+<?php if(get_option('wpsp_title_enable')==1){?> 
+                    <h3><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+<?php }?>
+                    <?php if(get_option('wpsp_date_enable')==1){?> <span><?php echo get_the_date();?></span><?php }?>
+                   
+
+                   <?php if(get_option('wpsp_excerpt_enable')==1){?> <p><?php //the_content();
+                   
+                   $wpsp_ex_len=get_option('wpsp_c_len');
+                   
+                     if (!is_numeric($wpsp_ex_len)) {
+             $wpsp_ex_len=10;
+             }
+                   $wpsp_content = get_the_content();                   
+                                 
+$wpsp_trimmed = wp_trim_words( $wpsp_content, $wpsp_ex_len ,$more=null);
+$wpsp_rest = substr($wpsp_trimmed, 0, -8); 
+echo $wpsp_rest;
+                   ?></p><?php }?>
+
+                    
+                     <?php if(get_option('wpsp_readmore_enable')==1){?> 
+                      <a href="<?php the_permalink(); ?>" class="wpsp_readmore">
+                     <?php echo get_option('wpsp_readmore'); ?> </a>
+                     <?php }?>
+                  </div>
+                </li>
+                <?php endwhile; endif; wp_reset_query(); ?> 
+              </ul>
+              
+            </div>
+                  
+<!--wp scrollpost  out put ends here by ajay sharma-->
+
+<?php
+    return ob_get_clean();
+	 
+
+     }
+add_shortcode( 'wpsp', 'wpsp_shortcode_catcher' );
+
+/*** short code catcher ends here******/
