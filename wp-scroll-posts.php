@@ -314,8 +314,8 @@ echo js_id_scrool($id_post);
         <div id="scrroll-<?php echo $id_post;?>" class="wpsp_container">
           <ul>
         <?php
-        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-$args = array('posts_per_page' => get_option('wpsp_mnop'),'category_name'=>get_option("wpsp_cat"), 'paged' => $paged );
+        //$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+$args = array('posts_per_page' => get_option('wpsp_mnop'),'category_name'=>get_option("wpsp_cat"));
 query_posts($args);
 query_posts( $args); if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                 <li >                
