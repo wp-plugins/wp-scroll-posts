@@ -382,13 +382,12 @@ echo $wpsp_rest;
 } // class Foo_Widget
    // register Foo_Widget widget
    
-   if (get_option('wpsp_enable') == 1){
-function register_foo_widget() {
+
+if (get_option('wpsp_enable') == 1){
+function register_wpsp_widget() {
     register_widget( 'wp_scroll_post' );
 }
-add_action( 'widgets_init', 'register_foo_widget' );}
-
-
+add_action( 'widgets_init', 'register_wpsp_widget' );}
 
  add_filter('widget_text', 'do_shortcode'); //to enable shortcode in  text widget
 /*****short code catcher starts here**/
