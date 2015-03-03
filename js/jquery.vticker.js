@@ -2,6 +2,8 @@
 * vertical news ticker
 * Tadas Juozapaitis ( kasp3rito [eta] gmail (dot) com )
 * http://www.jugbit.com/jquery-vticker-vertical-news-ticker/
+* updated by ajay3085006
+* ajayitprof(at)gmail(dot)com
 */
 (function($){
 $.fn.vTicker = function(options) {
@@ -13,7 +15,8 @@ $.fn.vTicker = function(options) {
 		mousePause: true,
 		isPaused: false,
 		direction: 'up',
-		height: 0
+		height: 0,
+		scrollItems:1
 	};
 
 	var options = $.extend(defaults, options);
@@ -21,18 +24,34 @@ $.fn.vTicker = function(options) {
 	moveUp = function(obj2, height, options){
 		if(options.isPaused)
 			return;
-		
 		var obj = obj2.children('ul');
-		
     	var clone = obj.children('li:first').clone(true);
+		clone.appendTo(obj);
+		
+		for (var i = 1, limit = options.scrollItems; i < limit; i++) {
+			clone_inner = obj.children('li:nth-child('+i+')').next().clone(true);
+			clone_inner.appendTo(obj);
+		}
 		
 		if(options.height > 0)
 		{
 			height = obj.children('li:first').height();
 		}		
 		
-    	obj.animate({top: '-=' + height + 'px'}, options.speed, function() {
-        	$(this).children('li:first').remove();
+    	//add new height option
+    	obj.animate({top: '-=' + options.scrollItems*height + 'px'}, options.speed, function() {
+        	
+			
+			$(this).children('li:first').remove();
+			
+			//added extra loop
+			for (var i = 1, limit = options.scrollItems; i < limit; i++) {
+        	
+			$(this).children('li:first').remove();
+			
+			}
+			
+			
         	$(this).css('top', '0px');
         });
 		
@@ -45,7 +64,6 @@ $.fn.vTicker = function(options) {
 			}
 		}
 
-    	clone.appendTo(obj);
 	};
 	
 	moveDown = function(obj2, height, options){
@@ -53,20 +71,43 @@ $.fn.vTicker = function(options) {
 			return;
 		
 		var obj = obj2.children('ul');
+		//var clone_inner;
+		//var clone;
 		
-    	var clone = obj.children('li:last').clone(true);
+    	//var clone = obj.children('li:last').clone(true);
 		
 		if(options.height > 0)
 		{
 			height = obj.children('li:first').height();
 		}
+		/*
+		obj.css('top', '-' + height + 'px');
+		obj.prepend(clone);
+		*/
 		
-		obj.css('top', '-' + height + 'px')
-			.prepend(clone);
+		for (var i = options.scrollItems, limit = 0; i > limit; i--) {
+        console.log(i);
+		clone = obj.children('li:last').clone(true);
+		obj.css('top', '-' + height + 'px');
+		
+		obj.prepend(clone);
+		
+		obj.children('li:last').remove();
+		
+		
+		 } ///end loop
+		
+		 
+		
 			
     	obj.animate({top: 0}, options.speed, function() {
-        	$(this).children('li:last').remove();
+		for (var i = options.scrollItems, limit = 0; i > limit; i--) {
+        	//$(this).children('li:last').remove();
+			}
         });
+		
+		
+		
 		
 		if(options.animation == 'fade')
 		{
@@ -74,7 +115,13 @@ $.fn.vTicker = function(options) {
 			{
 				obj.children('li:eq(' + options.showItems + ')').fadeOut(options.speed);
 			}
-			obj.children('li:first').hide().fadeIn(options.speed).show();
+		  obj.children('li:first').hide().fadeIn(options.speed).show();
+		  
+		  for (var i = options.scrollItems, limit = 0; i > limit; i--) {
+        	//$(this).children('li:last').remove();
+			 //obj.children('li:first').hide().fadeIn(options.speed).show();
+			 obj.children('li:eq(' + options.showItems + ')').hide().fadeIn(options.speed).show();
+			}
 		}
 	};
 	

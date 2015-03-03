@@ -2,8 +2,8 @@
     /*
   Plugin Name: wp scroll posts
   Plugin URI: http://ajaysharma3085006.wordpress.com/
-  Description: scroll any category posts up/down in widget , page  or post, have shortcode [wpsp],[wpsp cat='CategoryName'], with multiple instance
-  Version: 0.5
+  Description: Scrolls any category posts up/down in widget , page  or post, have shortcode [wpsp],[wpsp cat='CategoryName'], with multiple instance
+  Version: 0.6
   Author: Ajay Sharma
   Author URI: http://ajaysharma3085006.wordpress.com/
   License: GPLv2 or later
@@ -11,6 +11,7 @@
   function wp_scroll_post_activation() {
     
      add_option( wpsp_nop, '3', '', yes ); 
+     add_option( wpsp_nops, '1', '', yes ); 
      add_option( wpsp_mnop, '10', '', yes );
      add_option( wpsp_cat, 'uncategorized', '', yes ); 
      add_option( wpsp_direction,'up', '', yes ); 
@@ -33,6 +34,7 @@ register_activation_hook(__FILE__, 'wp_scroll_post_activation');
 function wp_scroll_post_deactivation() {
     
 delete_option( 'wpsp_nop' );
+delete_option( 'wpsp_nops' );
 delete_option( 'wpsp_mnop' );
 delete_option( 'wpsp_cat' );
 delete_option( 'wpsp_direction' );
@@ -80,6 +82,7 @@ function register_scroll_post_settings() {
 
   //register our settings
   register_setting( 'wpsp-settings-group', 'wpsp_nop' );
+  register_setting( 'wpsp-settings-group', 'wpsp_nops' );
   register_setting( 'wpsp-settings-group', 'wpsp_mnop' );
   register_setting( 'wpsp-settings-group', 'wpsp_mnop' );
   register_setting( 'wpsp-settings-group', 'wpsp_cat' );
@@ -107,7 +110,7 @@ function scroll_posts_settings_page() {?><div class="wrap">
     <?php do_settings_sections( 'scroll_posts_settings_page' ); ?>
     <table class="form-table">
     <tr valign="top">
-        <th scope="row">Enable  Wiget</th>
+        <th scope="row">Enable  Widget</th>
         <td>
 <input type="checkbox" name="wpsp_enable" value="1" <?php checked(get_option('wpsp_enable'), 1); ?> />
         
@@ -180,6 +183,29 @@ function scroll_posts_settings_page() {?><div class="wrap">
         
         
          Default: 3</td>
+        </tr>
+        <tr valign="top">
+        <th scope="row">Numbers of posts scrolls at a time in Scroller </th>
+        <td>
+       
+<select name="wpsp_nops">
+    <option value="1" <?php selected( get_option('wpsp_nops'), 1 ); ?>>1</option>
+    <option value="2" <?php selected( get_option('wpsp_nops'), 2 ); ?>>2</option>
+    <option value="3" <?php selected( get_option('wpsp_nops'), 3 ); ?>>3</option>
+    <option value="4" <?php selected( get_option('wpsp_nops'), 4 ); ?>>4</option>
+    <option value="5" <?php selected( get_option('wpsp_nops'), 5 ); ?>>5</option>
+    <option value="6" <?php selected( get_option('wpsp_nops'), 6 ); ?>>6</option>
+    <option value="7" <?php selected( get_option('wpsp_nops'), 7 ); ?>>7</option>
+    <option value="8" <?php selected( get_option('wpsp_nops'), 8 ); ?>>8</option>
+    <option value="9" <?php selected( get_option('wpsp_nops'), 9 ); ?>>9</option>
+    <option value="10" <?php selected( get_option('wpsp_nops'), 10 ); ?>>10</option>
+    <option value="11" <?php selected( get_option('wpsp_nops'), 11); ?>>11</option>
+    <option value="12" <?php selected( get_option('wpsp_nops'), 12); ?>>12</option>
+</select>
+        
+        
+        
+         Default: 1</td>
         </tr>
          
         <tr valign="top">
@@ -274,6 +300,7 @@ pause: ".get_option('wpsp_ptime').",
 showItems: ".get_option('wpsp_nop').",
 animation: 'fade',
 mousePause:".get_option('wpsp_mousepause').",
+scrollItems:".get_option('wpsp_nops').",
 height: '0',
 direction:'".get_option('wpsp_direction')."' 
 });
@@ -316,7 +343,7 @@ echo js_id_scrool($id_post);
         <?php
         //$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $args = array('posts_per_page' => get_option('wpsp_mnop'),'category_name'=>get_option("wpsp_cat"));
-query_posts($args);
+
 query_posts( $args); if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                 <li >                
                   <?php if(get_option('wpsp_thumbnail_enable')==1){?> 

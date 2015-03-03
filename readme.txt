@@ -3,7 +3,7 @@ Contributors: ajay3085006
 Donate link: https://ajaysharma3085006.wordpress.com/
 Tags: scroll posts, vertical scroller,scroller widget,scroller, wordpress post scroller ,scroll up/down, post scroller
 Requires at least: 3.5
-Tested up to: 4.1
+Tested up to: 4.1.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -49,6 +49,8 @@ For more visit blog [wp-scroll-posts](https://ajaysharma3085006.wordpress.com/ "
 2. Admin setting page
 
 == Changelog ==
+= 0.6 =
+* added setting numbers of post scrolls at a time in scroller
 = 0.5 =
 * added multiple instance 
 * category shortcode [wpsp cat='CategoryName']
@@ -62,5 +64,5 @@ For more visit blog [wp-scroll-posts](https://ajaysharma3085006.wordpress.com/ "
 = 0.1 =
 *scroller with posts
 == Upgrade Notice ==
-= 0.6 =
+= 0.6.1 =
 for thumbnail controls.
